@@ -1,2 +1,2 @@
-# py_bit_search
+# Test tasks
 binary search Artificial Intelligence University: Entry test
