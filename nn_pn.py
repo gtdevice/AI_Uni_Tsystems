@@ -58,11 +58,11 @@ for i in total_images_train_pneumonia:
 f.suptitle('Image sizes')
 f,ax = plt.subplots(1,3,figsize=(15,9))
 ax[0].plot(h)
-ax[0].suptitle('height')
+ax[0].title.set_text('height')
 ax[1].plot(w)
-ax[1].suptitle('width')
+ax[1].title.set_text('width')
 ax[2].plot(c)
-ax[2].suptitle('channels')
+ax[2].title.set_text('channels')
 plt.show()
 
 
@@ -129,25 +129,26 @@ test_set = test_datagen.flow_from_directory('xray/chest_xray/test',
 cnn.summary()
 
 cnn_model = cnn.fit_generator(training_set,
-                         steps_per_epoch = 30,
-                         epochs = 10,
+                         steps_per_epoch = 2,
+                         epochs = 2,
                          validation_data = validation_generator,
                          validation_steps = 200)
 
 test_accu = cnn.evaluate_generator(test_set,steps=200)
 print('The testing accuracy is :',test_accu[1]*100, '%')
-plt.plot(cnn_model.history['acc'])
-plt.plot(cnn_model.history['val_acc'])
-plt.title('Model Accuracy')
-plt.ylabel('Accuracy')
-plt.xlabel('Epoch')
-plt.legend(['Training set', 'Validation set'], loc='upper left')
-plt.show()
+f,ax = plt.subplots(1,2,figsize=(15,9))
+ax[0].plot(cnn_model.history['acc'])
+ax[0].plot(cnn_model.history['val_acc'])
+ax[0].title.set_text('Model Accuracy')
+ax[0].set_ylabel('Accuracy')
+ax[0].set_xlabel('Epoch')
+ax[0].legend(['Training set', 'Validation set'], loc='upper left')
 
-plt.plot(cnn_model.history['val_loss'])
-plt.plot(cnn_model.history['loss'])
-plt.title('Model Loss')
-plt.ylabel('Loss')
-plt.xlabel('Epoch')
-plt.legend(['Training set', 'Test set'], loc='upper left')
+
+ax[1].plot(cnn_model.history['val_loss'])
+ax[1].plot(cnn_model.history['loss'])
+ax[1].title.set_text('Model Loss')
+ax[1].set_ylabel('Loss')
+ax[1].set_xlabel('Epoch')
+ax[1].legend(['Training set', 'Test set'], loc='upper left')
 plt.show()
